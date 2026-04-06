@@ -1,0 +1,6 @@
+# Formation Intelligence Platform — Python Dependencies
+# Authority: DOC-01.1 Platform Governing Charter
+# Python >= 3.11 required (uses list[X] syntax, str | None, match/case)
+
+# Document parsing — VPIL and World Lexicon source documents
+python-docx==1.2.0

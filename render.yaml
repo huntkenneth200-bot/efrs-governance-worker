@@ -1,0 +1,39 @@
+services:
+  - type: worker
+    name: formation-intelligence-platform
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python engine.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+
+  - type: web
+    name: efrs-worker
+    env: node
+    plan: starter
+    region: oregon
+    buildCommand: "npm install && npm run build"
+    startCommand: "node dist/worker.js"
+    autoDeploy: true
+    healthCheckPath: /health
+    healthCheckTimeoutSeconds: 10
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: QUEUE_PROVIDER
+        value: SQS
+      - key: QUEUE_URL
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: HEALTH_PORT
+        value: "3000"
+      - key: HEARTBEAT_INTERVAL_MS
+        value: "5000"
+      - key: QUEUE_NAME
+        value: "efrs-tasks"
