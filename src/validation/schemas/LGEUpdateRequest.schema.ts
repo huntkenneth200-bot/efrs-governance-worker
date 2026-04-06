@@ -7,7 +7,10 @@ export const LGEUpdateRequestSchema: JSONSchemaType<LGEUpdateRequest> = {
     documentId: { type: "string" },
     tenantId: { type: "string" },
     lexiconKey: { type: "string" },
-    payload: { type: "object" },
+    payload: {
+  type: "object",
+  additionalProperties: true
+},
     occurredAt: { type: "string" }
   },
   required: ["documentId", "tenantId", "lexiconKey", "payload", "occurredAt"],
