@@ -2,7 +2,7 @@ export interface LGEUpdateRequest {
   documentId: string;
   tenantId: string;
   lexiconKey: string;
-  payload: unknown;
+  payload: Record<string, unknown>;
   occurredAt: string; // ISO timestamp
 }
 
