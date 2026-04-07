@@ -118,7 +118,10 @@ export class DGEClient implements DGEClientContract, DGEClientInterface {
         documentId: `${request.tenantId}:${request.documentType}`,
         tenantId: request.tenantId,
         eventType: request.documentType,
-        payload: request.payload,
+
+        // ⭐ FIXED: cast payload to match DGEProcessRequest
+        payload: request.payload as Record<string, unknown>,
+
         occurredAt: new Date().toISOString()
       });
 
