@@ -46,7 +46,7 @@ async function main() {
     }
 
     try {
-      const validated = validateOrThrow<DocumentEvent>("DocumentEvent", parsed);
+      const validated = validateOrThrow("DocumentEvent", parsed) as DocumentEvent;
       await client.enqueue<DocumentEvent>(queueName, validated);
       count += 1;
     } catch (err) {
