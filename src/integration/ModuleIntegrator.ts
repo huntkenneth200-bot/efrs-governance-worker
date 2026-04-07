@@ -2,8 +2,6 @@ import { randomUUID } from "crypto";
 import { validateOrThrow } from "../validation/ValidatorFactory";
 import { witness } from "../logging/WitnessLogger";
 import { metrics } from "../metrics/MetricsRegistry";
-import { QueueClient } from "../queue/QueueClient";
-import { GovernanceBus } from "../governance/GovernanceBus";
 import type { DGEClient, DgeEvaluateRequest, DgeEvaluateResult } from "../dge/DGEClient";
 import type { LGEClient, LgeLexiconRequest, LgeLexiconResult } from "../lge/LGEClient";
 import type { ApiResponse } from "../contracts";
@@ -13,6 +11,7 @@ import { eventLineageStore } from "../lineage/EventLineageStore";
 import { invariant } from "../invariants/Invariant";
 import { toErrorEnvelope } from "../logging/ErrorEnvelope";
 import type { LineageStore } from "../lineage/LineageTypes";
+import { GovernanceBus } from "../governance/GovernanceBus";
 
 export class ModuleIntegrator {
   private readonly governanceBus: GovernanceBus;
@@ -32,7 +31,7 @@ export class ModuleIntegrator {
     this.lineageStore = options.lineageStore;
   }
 
-async processMessage(message: QueueMessage<DocumentEvent>): Promise<void> {
+  async processMessage(message: QueueMessage<DocumentEvent>): Promise<void> {
     const { payload } = message;
     const correlationId = randomUUID();
     const startedAt = Date.now();
@@ -52,6 +51,7 @@ async processMessage(message: QueueMessage<DocumentEvent>): Promise<void> {
       id: validated.documentId,
       details: { correlationId }
     });
+
     witness.log(
       "MESSAGE_RECEIVED",
       { documentId: validated.documentId, tenantId: validated.tenantId },
@@ -201,7 +201,8 @@ async processMessage(message: QueueMessage<DocumentEvent>): Promise<void> {
       eventType: result.ok ? "REQUEST_VALIDATED" : "ERROR",
       timestamp: new Date().toISOString(),
       schemaVersion: "v1",
-      context: { result: result as unknown as Record<string, unknown> });
+      context: { result: result as unknown as Record<string, unknown> }
+    });
 
     return result;
   }
@@ -228,7 +229,8 @@ async processMessage(message: QueueMessage<DocumentEvent>): Promise<void> {
       eventType: result.ok ? "REQUEST_VALIDATED" : "ERROR",
       timestamp: new Date().toISOString(),
       schemaVersion: "v1",
-      context: { result: result as unknown as Record<string, unknown> });
+      context: { result: result as unknown as Record<string, unknown> }
+    });
 
     return result;
   }
