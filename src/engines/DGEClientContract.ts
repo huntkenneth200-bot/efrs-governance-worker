@@ -2,7 +2,7 @@ export interface DGEProcessRequest {
   documentId: string;
   tenantId: string;
   eventType: string;
-  payload: unknown;
+  payload: Record<string, unknown>;
   occurredAt: string; // ISO timestamp
 }
 
