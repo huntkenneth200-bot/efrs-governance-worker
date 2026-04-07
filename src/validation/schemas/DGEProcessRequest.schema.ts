@@ -7,7 +7,10 @@ export const DGEProcessRequestSchema: JSONSchemaType<DGEProcessRequest> = {
     documentId: { type: "string" },
     tenantId: { type: "string" },
     eventType: { type: "string" },
-    payload: { type: "object" },
+    payload: {
+  type: "object",
+  additionalProperties: true
+},
     occurredAt: { type: "string" }
   },
   required: ["documentId", "tenantId", "eventType", "payload", "occurredAt"],
