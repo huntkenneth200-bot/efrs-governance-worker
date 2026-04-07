@@ -54,7 +54,7 @@ async function main() {
 
     try {
       const validated = validateOrThrow<DocumentEvent>("DocumentEvent", parsed);
-      await client.enqueue(queueName, validated);
+      await client.enqueue<DocumentEvent>(queueName, validated);
       count += 1;
     } catch (err) {
       witness.log("REPLAY_EVENT_VALIDATION_ERROR", { event: parsed, error: String(err) }, "WARN");

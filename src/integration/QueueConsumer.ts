@@ -4,7 +4,6 @@ import { ModuleIntegrator } from "./ModuleIntegrator";
 import { witness } from "../logging/WitnessLogger";
 import { metrics } from "../metrics/MetricsRegistry";
 import { governanceBus } from "../governance/GovernanceSignalBus";
-import { InvariantViolation } from "../invariants/InvariantViolation";
 import { toErrorEnvelope } from "../logging/ErrorEnvelope";
 
 const MAX_ATTEMPTS = 3;
@@ -16,7 +15,7 @@ export async function startQueueConsumer(
 ): Promise<void> {
   const client = getQueueAdapter("default");
 
-  await client.registerConsumer(queueName, async (msg: QueueMessage<unknown>) => {
+  await client.registerConsumer(queueName, async (msg: QueueMessage<DocumentEvent>) => {
     assertValidQueueMessage(msg);
 
     try {
