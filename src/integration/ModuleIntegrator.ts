@@ -7,7 +7,6 @@ import { GovernanceBus } from "../governance/GovernanceBus";
 import type { DGEClient, DgeEvaluateRequest, DgeEvaluateResult } from "../dge/DGEClient";
 import type { LGEClient, LgeLexiconRequest, LgeLexiconResult } from "../lge/LGEClient";
 import type { ApiResponse } from "../contracts";
-import { success, failure } from "../contracts";
 import { DocumentEvent, assertValidDocumentEvent } from "../validation/schemas/DocumentEvent.schema";
 import { QueueMessage } from "../queue/QueueMessage";
 import { eventLineageStore } from "../lineage/EventLineageStore";
@@ -36,7 +35,7 @@ export class ModuleIntegrator {
     this.lineageStore = options.lineageStore;
   }
 
-  async processMessage(message: QueueMessage<unknown>): Promise<void> {
+async processMessage(message: QueueMessage<DocumentEvent>): Promise<void> {
     const { payload } = message;
     const correlationId = randomUUID();
     const startedAt = Date.now();
@@ -75,7 +74,7 @@ export class ModuleIntegrator {
         throw new Error(dgeResponse.error.message);
       }
 
-      const dgeResult = dgeResponse.data;
+      const dgeResult = dgeResponse.data as unknown as Record<string, unknown>;
       invariant(dgeResult.tenantId, "DGE result missing tenantId", dgeResult);
       invariant(dgeResult.decision, "DGE result missing decision", dgeResult);
 
@@ -90,7 +89,7 @@ export class ModuleIntegrator {
         throw new Error(lgeResponse.error.message);
       }
 
-      const lgeResult = lgeResponse.data;
+      const lgeResult = lgeResponse.data as unknown as Record<string, unknown>;
       invariant(lgeResult.tenantId, "LGE result missing tenantId", lgeResult);
 
       const completedAt = Date.now();
