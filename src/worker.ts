@@ -13,7 +13,6 @@ async function main() {
   const governanceBus = new InMemoryGovernanceBus();
 
   const moduleIntegrator = new ModuleIntegrator({
-    queueClient,
     governanceBus,
     dgeClient: new DGEClient(),
     lgeClient: new LGEClient(),
