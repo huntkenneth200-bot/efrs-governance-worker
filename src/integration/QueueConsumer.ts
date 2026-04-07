@@ -1,4 +1,5 @@
 import { getQueueAdapter } from "../queue/QueueAdapterRegistry";
+import { DocumentEvent } from "../validation/schemas/DocumentEvent.schema";
 import { QueueMessage, assertValidQueueMessage } from "../queue/QueueMessage";
 import { ModuleIntegrator } from "./ModuleIntegrator";
 import { witness } from "../logging/WitnessLogger";

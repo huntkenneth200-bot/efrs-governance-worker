@@ -2,19 +2,12 @@
 
 import fs from "fs";
 import readline from "readline";
+import { DocumentEvent } from "../validation/schemas/DocumentEvent.schema";
 import { registerQueueAdapter } from "../queue/QueueAdapterRegistry";
 import { InMemoryQueueClient } from "../queue/InMemoryQueueClient";
 import { bootstrapSchemas } from "../validation/SchemaBootstrap";
 import { validateOrThrow } from "../validation/ValidatorFactory";
 import { witness } from "../logging/WitnessLogger";
-
-interface DocumentEvent {
-  documentId: string;
-  tenantId: string;
-  eventType: string;
-  payload: Record<string, unknown>;
-  occurredAt: string;
-}
 
 async function main() {
   const filePath = process.argv[2];
