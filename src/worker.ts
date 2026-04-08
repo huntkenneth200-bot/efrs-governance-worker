@@ -7,6 +7,14 @@ import { DGEClient } from "./engines/DGEClient";
 import { LGEClient } from "./engines/LGEClient";
 import { witness } from "./logging/WitnessLogger";
 
+console.log("ENV_DEBUG", {
+  QUEUE_PROVIDER: process.env.QUEUE_PROVIDER,
+  QUEUE_URL: process.env.QUEUE_URL,
+  AWS_REGION: process.env.AWS_REGION,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ? "SET" : "MISSING",
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY ? "SET" : "MISSING",
+});
+
 async function main() {
   const queueConfig = loadQueueConfig();
   const queueClient = new SqsQueueClient(queueConfig);
