@@ -1,11 +1,15 @@
 import { QueueAdapterConfig } from "../adapters/queue/types";
 
 export function loadQueueConfig(): QueueAdapterConfig {
-  return {
+  const queueConfig: QueueAdapterConfig = {
     provider: (process.env.QUEUE_PROVIDER as QueueAdapterConfig["provider"]) ?? "SQS",
-    queueUrl: process.env.QUEUE_URL!,
+    queueUrl: process.env.QUEUE_URL,
     region: process.env.AWS_REGION,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   };
+
+  console.log("QUEUE CONFIG DEBUG", queueConfig);
+
+  return queueConfig;
 }
