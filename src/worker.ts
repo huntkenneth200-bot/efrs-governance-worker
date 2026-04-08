@@ -1,6 +1,7 @@
 import { loadQueueConfig } from "./config/queue";
 import { SqsQueueClient } from "./adapters/queue/SqsQueueClient";
-import { InMemoryGovernanceBus } from "./governance/GovernanceBus";
+
+import { governanceBus } from "./governance/GovernanceSignalBus";
 import { ModuleIntegrator } from "./integration/ModuleIntegrator";
 import { WorkerBootstrap } from "./integration/WorkerBootstrap";
 import { DGEClient } from "./engines/DGEClient";
@@ -18,7 +19,6 @@ console.log("ENV_DEBUG", {
 async function main() {
   const queueConfig = loadQueueConfig();
   const queueClient = new SqsQueueClient(queueConfig);
-  const governanceBus = new InMemoryGovernanceBus();
 
   const moduleIntegrator = new ModuleIntegrator({
     governanceBus,

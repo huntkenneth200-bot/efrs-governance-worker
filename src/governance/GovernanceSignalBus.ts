@@ -28,3 +28,16 @@ class GovernanceSignalBus extends EventEmitter {
 }
 
 export const governanceBus = new GovernanceSignalBus();
+
+// TEMPORARY DEBUG HANDLERS FOR INTERNAL WORKER EVENTS
+governanceBus.on("MESSAGE_RECEIVED", (event) => {
+  console.log("📥 MESSAGE_RECEIVED", event);
+});
+
+governanceBus.on("MESSAGE_PROCESSED", (event) => {
+  console.log("📤 MESSAGE_PROCESSED", event);
+});
+
+governanceBus.on("MESSAGE_FAILED", (event) => {
+  console.log("💥 MESSAGE_FAILED", event);
+});
