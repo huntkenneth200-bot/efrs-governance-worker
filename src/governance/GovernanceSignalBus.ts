@@ -21,11 +21,14 @@ export interface GovernanceEventPayload {
   details?: unknown;
 }
 
-class GovernanceSignalBus extends EventEmitter {
-  emitEvent(event: GovernanceEventPayload) {
+import type { GovernanceBus, GovernanceEvent } from "./GovernanceBus";
+
+class GovernanceSignalBus extends EventEmitter implements GovernanceBus {
+  emitEvent(event: GovernanceEvent) {
     this.emit(event.type, event);
   }
 }
+
 
 export const governanceBus = new GovernanceSignalBus();
 
