@@ -137,7 +137,7 @@ export function runDriftChecks(): void {
     governanceBus.emitEvent({
       type: "DRIFT_CHECKS_PASSED",
       severity: "INFO",
-      timestamp: Date.now(),
+      timestamp: new Date().toISOString(),
       id: "DRIFT_CHECKS"
     });
     return;
@@ -153,7 +153,7 @@ export function runDriftChecks(): void {
     governanceBus.emitEvent({
       type: "DRIFT_ISSUE_DETECTED",
       severity: "ERROR",
-      timestamp: Date.now(),
+      timestamp: new Date().toISOString(),
       id: "DRIFT_CHECKS",
       details: { message: "Drift detected during startup." }
     });
@@ -162,7 +162,7 @@ export function runDriftChecks(): void {
     governanceBus.emitEvent({
       type: "DRIFT_ISSUE_DETECTED",
       severity: "WARN",
-      timestamp: Date.now(),
+      timestamp: new Date().toISOString(),
       id: "DRIFT_CHECKS_WARN"
     });
   }

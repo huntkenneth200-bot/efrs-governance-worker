@@ -1,13 +1,14 @@
-import { DGEClientContract, DGEProcessRequest, DGEProcessResponse } from "./DGEClientContract";
+import { DGEClientContract, DGEProcessRequest, DGEProcessResponse, DgeEvaluateRequest, DgeEvaluateResult } from "./DGEClientContract";
 import { validateOrThrow } from "../validation/ValidatorFactory";
 import { withRetry } from "../retry/RetryEnvelope";
 import { witness } from "../logging/WitnessLogger";
 import { metrics } from "../metrics/MetricsRegistry";
 import { governanceBus } from "../governance/GovernanceSignalBus";
 import { DGESimEngine, DGESimMode, DGESimOptions } from "./DGESimEngine";
-import type { DGEClient as DGEClientInterface, DgeEvaluateRequest, DgeEvaluateResult } from "../dge/DGEClient";
 import type { ApiResponse } from "../contracts";
 import { success, failure } from "../contracts";
+
+export type { DgeEvaluateRequest, DgeEvaluateResult };
 
 const DGE_REQUEST_SCHEMA_NAME = "DGEProcessRequest";
 const DGE_RESPONSE_SCHEMA_NAME = "DGEProcessResponse";
@@ -17,7 +18,7 @@ export interface DGEClientOptions extends DGESimOptions {
   latencyMs?: number;
 }
 
-export class DGEClient implements DGEClientContract, DGEClientInterface {
+export class DGEClient implements DGEClientContract {
   private readonly endpoint: string;
   private readonly latencyMs: number;
   private readonly simEngine: DGESimEngine;
@@ -100,7 +101,7 @@ export class DGEClient implements DGEClientContract, DGEClientInterface {
       governanceBus.emitEvent({
         type: "MESSAGE_PROCESSED",
         severity: "INFO",
-        timestamp: Date.now(),
+        timestamp: new Date().toISOString(),
         id: validatedResponse.documentId,
         details: {
           engine: "DGE",

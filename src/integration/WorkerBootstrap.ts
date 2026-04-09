@@ -10,8 +10,8 @@ import { bootstrapSchemas } from "../validation/SchemaBootstrap";
 import { metrics } from "../metrics/MetricsRegistry";
 import { eventLineageStore } from "../lineage/EventLineageStore";
 import { success, failure, ApiResponse } from "../contracts";
-import type { DgeEvaluateRequest, DgeEvaluateResult } from "../dge/DGEClient";
-import type { LgeLexiconRequest, LgeLexiconResult } from "../lge/LGEClient";
+import type { DgeEvaluateRequest, DgeEvaluateResult } from "../engines/DGEClientContract";
+import type { LgeLexiconRequest, LgeLexiconResult } from "../engines/LGEClientContract";
 
 interface WorkerState {
   ready: boolean;

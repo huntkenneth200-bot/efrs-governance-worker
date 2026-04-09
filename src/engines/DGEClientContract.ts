@@ -17,3 +17,18 @@ export interface DGEProcessResponse {
 export interface DGEClientContract {
   process(request: DGEProcessRequest): Promise<DGEProcessResponse>;
 }
+
+export interface DgeEvaluateRequest {
+  tenantId: string;
+  documentType: string;
+  payload: Record<string, unknown>;
+  version: string;
+}
+
+export interface DgeEvaluateResult {
+  tenantId: string;
+  documentType: string;
+  decision: "ALLOW" | "DENY" | "REVIEW";
+  reasons: string[];
+  version: string;
+}

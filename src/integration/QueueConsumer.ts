@@ -58,7 +58,7 @@ export async function startQueueConsumer(
         governanceBus.emitEvent({
           type: "MESSAGE_FAILED",
           severity: "ERROR",
-          timestamp: Date.now(),
+          timestamp: new Date().toISOString(),
           id: msg.id,
           details: {
             queueName,

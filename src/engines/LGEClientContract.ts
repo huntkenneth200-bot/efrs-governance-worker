@@ -16,3 +16,17 @@ export interface LGEUpdateResponse {
 export interface LGEClientContract {
   update(request: LGEUpdateRequest): Promise<LGEUpdateResponse>;
 }
+
+export interface LgeLexiconRequest {
+  tenantId: string;
+  lexiconName: string;
+  input: string;
+  version: string;
+}
+
+export interface LgeLexiconResult {
+  tenantId: string;
+  lexiconName: string;
+  output: string;
+  version: string;
+}

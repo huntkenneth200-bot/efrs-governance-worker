@@ -1,13 +1,14 @@
-import { LGEClientContract, LGEUpdateRequest, LGEUpdateResponse } from "./LGEClientContract";
+import { LGEClientContract, LGEUpdateRequest, LGEUpdateResponse, LgeLexiconRequest, LgeLexiconResult } from "./LGEClientContract";
 import { validateOrThrow } from "../validation/ValidatorFactory";
 import { withRetry } from "../retry/RetryEnvelope";
 import { witness } from "../logging/WitnessLogger";
 import { metrics } from "../metrics/MetricsRegistry";
 import { governanceBus } from "../governance/GovernanceSignalBus";
 import { LGESimEngine, LGESimMode, LGESimOptions } from "./LGESimEngine";
-import type { LGEClient as LGEClientInterface, LgeLexiconRequest, LgeLexiconResult } from "../lge/LGEClient";
 import type { ApiResponse } from "../contracts";
 import { success, failure } from "../contracts";
+
+export type { LgeLexiconRequest, LgeLexiconResult };
 
 const LGE_REQUEST_SCHEMA_NAME = "LGEUpdateRequest";
 const LGE_RESPONSE_SCHEMA_NAME = "LGEUpdateResponse";
@@ -17,7 +18,7 @@ export interface LGEClientOptions extends LGESimOptions {
   latencyMs?: number;
 }
 
-export class LGEClient implements LGEClientContract, LGEClientInterface {
+export class LGEClient implements LGEClientContract {
   private readonly endpoint: string;
   private readonly latencyMs: number;
   private readonly simEngine: LGESimEngine;
@@ -100,7 +101,7 @@ export class LGEClient implements LGEClientContract, LGEClientInterface {
       governanceBus.emitEvent({
         type: "MESSAGE_PROCESSED",
         severity: "INFO",
-        timestamp: Date.now(),
+        timestamp: new Date().toISOString(),
         id: validatedResponse.documentId,
         details: {
           engine: "LGE",

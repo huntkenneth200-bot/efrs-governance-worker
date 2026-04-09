@@ -1,0 +1,1 @@
+{"version":3,"file":"GovernanceSignalBus.d.ts","sourceRoot":"","sources":["../../src/governance/GovernanceSignalBus.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,QAAQ,CAAC;AACtC,OAAO,KAAK,EAAE,aAAa,EAAE,eAAe,EAAE,MAAM,iBAAiB,CAAC;AAEtE,cAAM,mBAAoB,SAAQ,YAAa,YAAW,aAAa;IACrE,SAAS,CAAC,KAAK,EAAE,eAAe;CAGjC;AAGD,eAAO,MAAM,aAAa,qBAA4B,CAAC"}
